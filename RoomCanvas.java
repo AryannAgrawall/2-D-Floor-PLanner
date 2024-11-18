@@ -107,27 +107,4 @@ public class RoomCanvas extends JPanel {
             if (room != roomToCheck && room.overlaps(roomToCheck)) {
                 return true;
             }
-        }
-        return false;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawGrid(g);
-        for (Room room : rooms) {
-            room.draw(g);
-        }
-    }
-
-    // Draw the grid
-    private void drawGrid(Graphics g) {
-        g.setColor(Color.LIGHT_GRAY);
-        for (int i = 0; i < getWidth(); i += 20) {
-            g.drawLine(i, 0, i, getHeight());
-        }
-        for (int j = 0; j < getHeight(); j += 20) {
-            g.drawLine(0, j, getWidth(), j);
-        }
-    }
-}
+       
