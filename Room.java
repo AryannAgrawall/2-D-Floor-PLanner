@@ -101,3 +101,12 @@ public class Room {
         // Deletion logic will be handled in RoomCanvas, but this method can be used if necessary.
     }
 }
+
+
+//added after dinner
+public boolean overlaps(Room other) {
+    return this.x < other.x + other.width &&
+           this.x + this.width > other.x &&
+           this.y < other.y + other.height &&
+           this.y + this.height > other.y;
+}
