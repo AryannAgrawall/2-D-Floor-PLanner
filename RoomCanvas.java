@@ -23,9 +23,9 @@ public class RoomCanvas extends JPanel {
                         selectedRoom = room;
                         dragStartPoint = e.getPoint();
                         if (selectedRoom.isNearCorner(e.getPoint())) {
-                            isResizing = true;  // Start resizing if near a corner
+                            isResizing = true;
                         } else {
-                            isMoving = true;  // Start moving if not near a corner
+                            isMoving = true;
                         }
                         break;
                     }
@@ -36,21 +36,17 @@ public class RoomCanvas extends JPanel {
                 if (selectedRoom != null) {
                     if (isResizing) {
                         isResizing = false;
-                        // Snap room size to grid
                         selectedRoom.adjustSizeToGrid();
-                        // Revert size if overlap occurs
                         if (hasOverlap(selectedRoom)) {
                             JOptionPane.showMessageDialog(null, "Room overlaps with another room. Resize reverted.");
-                            selectedRoom.resize(0, 0); // Revert size change
+                            selectedRoom.resize(0, 0);  // Revert size change
                         }
                     } else if (isMoving) {
                         isMoving = false;
-                        // Snap room position to grid
                         selectedRoom.snapToGrid();
-                        // Revert position if overlap occurs
                         if (hasOverlap(selectedRoom)) {
                             JOptionPane.showMessageDialog(null, "Room overlaps with another room. Move reverted.");
-                            selectedRoom.move(0, 0); // Revert move change
+                            selectedRoom.move(0, 0);  // Revert move change
                         }
                     }
                 }
@@ -69,50 +65,50 @@ public class RoomCanvas extends JPanel {
                     if (isResizing) {
                         selectedRoom.resize(dx, dy);
                         if (hasOverlap(selectedRoom)) {
-                            selectedRoom.resize(-dx, -dy);  // Revert if there is an overlap
+                            selectedRoom.resize(-dx, -dy);  // Revert if overlap occurs
                         }
                     } else if (isMoving) {
                         selectedRoom.move(dx, dy);
                         if (hasOverlap(selectedRoom)) {
-                            selectedRoom.move(-dx, -dy);  // Revert if there is an overlap
+                            selectedRoom.move(-dx, -dy);  // Revert if overlap occurs
                         }
                     }
 
-                    dragStartPoint = e.getPoint();  // Update start point for next drag/resizing
-                    repaint();  // Redraw the canvas
+                    dragStartPoint = e.getPoint();
+                    repaint();
                 }
             }
         });
     }
 
-    // Add a new room to the canvas, snapping it to the grid
+    // Add a new room, ensuring no overlap
     public void addRoom(Room room) {
-        room.adjustSizeToGrid();  // Adjust room size to fit the grid
+        room.adjustSizeToGrid();
         if (!hasOverlap(room)) {
             rooms.add(room);
-            repaint();  // Redraw the canvas with the new room
+            repaint();
         } else {
             JOptionPane.showMessageDialog(this, "Room overlaps with another room. Please try again.");
         }
     }
 
-    // Delete the selected room from the canvas
+    // Delete the selected room
     public void deleteSelectedRoom() {
         if (selectedRoom != null) {
             rooms.remove(selectedRoom);
-            selectedRoom = null;  // Deselect room after deletion
-            repaint();  // Redraw the canvas after deletion
+            selectedRoom = null;
+            repaint();
         }
     }
 
-    // Check if the given room overlaps with any other room
+    // Check for room overlap
     public boolean hasOverlap(Room roomToCheck) {
         for (Room room : rooms) {
             if (room != roomToCheck && room.overlaps(roomToCheck)) {
-                return true;  // Overlap found
+                return true;
             }
         }
-        return false;  // No overlap
+        return false;
     }
 
     @Override
@@ -120,11 +116,11 @@ public class RoomCanvas extends JPanel {
         super.paintComponent(g);
         drawGrid(g);
         for (Room room : rooms) {
-            room.draw(g);  // Draw each room on the canvas
+            room.draw(g);
         }
     }
 
-    // Draw the grid on the canvas
+    // Draw the grid
     private void drawGrid(Graphics g) {
         g.setColor(Color.LIGHT_GRAY);
         for (int i = 0; i < getWidth(); i += 20) {
