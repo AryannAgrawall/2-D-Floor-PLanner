@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.Random;
 
 public class Room {
     private String name;
@@ -7,12 +6,10 @@ public class Room {
     private Color color;
 
     private static final int GRID_SIZE = 20;  // Grid size is 20 pixels
-    private static final Random random = new Random();
 
+    // Constructor that assigns colors based on room type
     public Room(String name, int width, int height) {
         this.name = name;
-
-        // Adjust room dimensions to snap to grid
         this.width = (int) (Math.round((double) width / GRID_SIZE) * GRID_SIZE);
         this.height = (int) (Math.round((double) height / GRID_SIZE) * GRID_SIZE);
 
@@ -20,8 +17,23 @@ public class Room {
         this.x = (int) (Math.round(100.0 / GRID_SIZE) * GRID_SIZE);
         this.y = (int) (Math.round(100.0 / GRID_SIZE) * GRID_SIZE);
 
-        // Assign a random color to the room
-        this.color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+        // Assign colors based on room type
+        switch (name) {
+            case "Bedroom":
+                this.color = Color.BLUE;
+                break;
+            case "Kitchen":
+                this.color = Color.RED;
+                break;
+            case "Living Room":
+                this.color = Color.GREEN;
+                break;
+            case "Bathroom":
+                this.color = Color.CYAN;
+                break;
+            default:
+                this.color = Color.GRAY;  // Default color for unknown room types
+        }
     }
 
     public String getName() {
