@@ -1,6 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
-
+//this is the main code
 public class FloorPlannerApp {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
